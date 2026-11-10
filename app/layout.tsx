@@ -1,26 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Instrument_Serif, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import { SITE } from "@/data/site";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const sans = Inter({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
-const serif = Instrument_Serif({
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["300", "400", "500"],
   style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
+  variable: "--font-newsreader",
   display: "swap",
 });
 
@@ -74,8 +68,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#02050d",
-  colorScheme: "dark",
+  themeColor: "#f8f6f0",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -103,7 +97,7 @@ export default function RootLayout({
   return (
     <html
       lang={SITE.lang}
-      className={`${sans.variable} ${serif.variable} ${mono.variable}`}
+      className={cn(inter.variable, newsreader.variable, "font-sans")}
     >
       <body className="antialiased">
         <script

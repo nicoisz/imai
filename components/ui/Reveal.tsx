@@ -1,47 +1,25 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import { reveal as revealVariant, viewportOnce } from "@/lib/anim";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type RevealProps = {
   children: React.ReactNode;
   className?: string;
-  variants?: Variants;
   delay?: number;
-  as?: "div" | "section" | "li" | "span" | "p";
-  amount?: number;
+  y?: number;
 };
 
-export function Reveal({
-  children,
-  className,
-  variants = revealVariant,
-  delay = 0,
-  amount = 0.2,
-}: RevealProps) {
-  const custom: Variants = {
-    hidden: variants.hidden,
-    visible: {
-      ...(variants.visible as object),
-      transition: {
-        ...((variants.visible as { transition?: object }).transition ?? {}),
-        delay,
-      },
-    },
-  };
-
+export function Reveal({ children, className, delay = 0, y = 24 }: RevealProps) {
   return (
     <motion.div
       className={cn(className)}
-      variants={custom}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ ...viewportOnce, amount }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
-
-export { viewportOnce };

@@ -164,10 +164,12 @@ renderiza con `.map()`. No hay elementos repetidos escritos a mano.
 ## Personalización
 
 - **Textos, enlaces y proyectos:** edita `data/site.ts`.
-- **Colores y tipografía:** `tailwind.config.ts` y `:root` en `app/globals.css`.
-- **Imágenes reales:** reemplaza `TechnicalIllustration` en
-  `components/ui/ProjectCard.tsx` por `next/image` cuando dispongas de los
-  recursos en AVIF/WebP.
+- **Colores y tipografía:** bloque `@theme` en `app/globals.css` (Tailwind v4, configuración CSS-first).
+- **Ilustración del hero:** `components/home/DotField.tsx` genera el campo de
+  puntos con un PRNG sembrado; los lóbulos y las opacidades están al principio
+  del archivo.
+- **Imágenes reales:** colócalas en `public/` y úsalas con `next/image` cuando
+  dispongas de los recursos en AVIF/WebP.
 
 ---
 

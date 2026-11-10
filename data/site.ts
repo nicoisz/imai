@@ -4,7 +4,12 @@ import {
   BrainCircuit,
   Cloud,
   ShieldCheck,
-  ArrowUpRight,
+  Telescope,
+  GaugeCircle,
+  Users,
+  Layers,
+  ScanEye,
+  LineChart,
 } from "lucide-react";
 
 export const SITE = {
@@ -15,86 +20,86 @@ export const SITE = {
   lang: "es-CL",
   email: "hola@imai.cl",
   location: "Santiago, Chile",
-  coordinates: "-33.4489°, -70.6693°",
   description:
     "Imai diseña y desarrolla software inteligente, soluciones con inteligencia artificial y plataformas escalables para empresas.",
-  tagline: "Inspirados por las estrellas, construimos el futuro.",
+  tagline: "Software inteligente para un mundo en expansión.",
 } as const;
 
-export type NavLink = {
-  label: string;
-  href: string;
-};
+export type NavLink = { label: string; href: string };
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Soluciones", href: "#soluciones" },
   { label: "Trabajos", href: "#trabajos" },
   { label: "Tecnología", href: "#tecnologia" },
-  { label: "Empresa", href: "#empresa" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Convicciones", href: "#convicciones" },
 ];
 
-export type SocialLink = {
-  label: string;
-  href: string;
-};
-
-export const SOCIAL_LINKS: SocialLink[] = [
+export const SOCIAL_LINKS: NavLink[] = [
   { label: "LinkedIn", href: "https://www.linkedin.com" },
   { label: "GitHub", href: "https://www.github.com" },
-  { label: "Correo", href: `mailto:${SITE.email}` },
+  { label: "Correo", href: "mailto:hola@imai.cl" },
 ];
+
+export const HERO = {
+  title: "Software inteligente para un mundo en expansión",
+  subtitle:
+    "Diseñamos y construimos productos donde la inteligencia artificial genera impacto real",
+  primary: { label: "Hablemos", href: "#contacto" },
+  secondary: { label: "Ver soluciones", href: "#soluciones" },
+} as const;
+
+export const MISSION = {
+  statement: "Hacemos que la tecnología avanzada sea utilizable de verdad",
+  subtitle:
+    "Diseñamos y construimos productos donde la inteligencia artificial genera impacto real",
+  cta: { label: "Nuestra misión", href: "#convicciones" },
+} as const;
 
 export type Service = {
   id: string;
-  index: string;
   title: string;
   description: string;
   href: string;
   icon: LucideIcon;
-  code: string;
 };
+
+export const SOLUTIONS_INTRO = {
+  label: "Soluciones",
+  heading: "Construimos el stack completo alrededor de tu producto",
+} as const;
 
 export const SERVICES: Service[] = [
   {
     id: "desarrollo-a-medida",
-    index: "01",
     title: "Desarrollo a medida",
     description:
-      "Aplicaciones robustas y escalables diseñadas para resolver problemas reales de tu negocio.",
+      "Construimos aplicaciones que puedes inspeccionar, extender y operar en tus propios términos. Probadas con rigor y pensadas para durar.",
     href: "/soluciones/desarrollo-a-medida",
     icon: Code2,
-    code: "DEV / 01",
   },
   {
     id: "ia-integrada",
-    index: "02",
     title: "Inteligencia artificial integrada",
     description:
-      "Incorporamos inteligencia artificial donde realmente genera impacto, no donde hace ruido.",
+      "Incorporamos modelos donde mueven la aguja del negocio: automatización de procesos, asistentes internos y análisis sobre tus propios datos.",
     href: "/soluciones/inteligencia-artificial",
     icon: BrainCircuit,
-    code: "AI / 02",
   },
   {
     id: "cloud-devops",
-    index: "03",
     title: "Cloud y DevOps",
     description:
-      "Infraestructura moderna, segura y preparada para crecer sin fricción.",
+      "Desplegamos en la nube, en tu infraestructura o en ambas. Entornos reproducibles, despliegues sin drama y costos que se entienden.",
     href: "/soluciones/cloud-devops",
     icon: Cloud,
-    code: "OPS / 03",
   },
   {
     id: "calidad-seguridad",
-    index: "04",
     title: "Calidad y seguridad",
     description:
-      "Buenas prácticas, pruebas automatizadas y seguridad desde la primera línea de código.",
+      "Nuestro equipo trabaja junto al tuyo desde la idea hasta producción, con pruebas automatizadas y seguridad desde la primera línea de código.",
     href: "/soluciones/calidad-seguridad",
     icon: ShieldCheck,
-    code: "QA / 04",
   },
 ];
 
@@ -106,7 +111,6 @@ export type Project = {
   technologies: string[];
   href: string;
   year: string;
-  catalog: string;
 };
 
 export const PROJECTS: Project[] = [
@@ -119,7 +123,6 @@ export const PROJECTS: Project[] = [
     technologies: ["Next.js", "Python", "PostgreSQL", "OpenAI"],
     href: "/trabajos/meridian",
     year: "2025",
-    catalog: "M—01",
   },
   {
     id: "aurora",
@@ -130,7 +133,6 @@ export const PROJECTS: Project[] = [
     technologies: ["PyTorch", "Kubernetes", "Edge"],
     href: "/trabajos/aurora",
     year: "2024",
-    catalog: "A—02",
   },
   {
     id: "lumen",
@@ -141,39 +143,160 @@ export const PROJECTS: Project[] = [
     technologies: ["TypeScript", "Node.js", "OpenAI", "AWS"],
     href: "/trabajos/lumen",
     year: "2024",
-    catalog: "L—03",
   },
 ];
 
-export type Technology = {
-  name: string;
-  category: string;
-};
-
-export const TECHNOLOGIES: Technology[] = [
-  { name: "TypeScript", category: "Lenguaje" },
-  { name: "React", category: "UI" },
-  { name: "Next.js", category: "Framework" },
-  { name: "Node.js", category: "Runtime" },
-  { name: "Python", category: "Lenguaje" },
-  { name: "PostgreSQL", category: "Datos" },
-  { name: "AWS", category: "Cloud" },
-  { name: "Docker", category: "Infra" },
-  { name: "Kubernetes", category: "Orquestación" },
-  { name: "OpenAI", category: "IA" },
-  { name: "CI/CD", category: "DevOps" },
-];
-
-export const STELLAR_META = {
-  name: "Imai",
-  bayer: "Delta Crucis",
-  symbol: "δ Cru",
-  catalog: "HD 106490",
-  temperature: "22 550 K",
-  luminosity: "5 600 L☉",
-  distance: "345 ly",
-  ra: "12h 15m 09s",
-  dec: "-58° 44′ 56″",
+export const HIGHLIGHT = {
+  label: "Trabajo destacado",
+  title: "Conoce Meridian",
+  description:
+    "Nuestra plataforma de inteligencia operacional, construida para equipos que deciden con datos en tiempo real.",
+  primary: { label: "Ver el caso", href: "/trabajos/meridian" },
+  secondary: { label: "Todos los trabajos", href: "#trabajos" },
 } as const;
 
-export const ARROW_UP_RIGHT = ArrowUpRight;
+export const TECHNOLOGIES: string[] = [
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Node.js",
+  "Python",
+  "PostgreSQL",
+  "AWS",
+  "Docker",
+  "Kubernetes",
+  "OpenAI",
+  "PyTorch",
+  "Terraform",
+];
+
+export type Conviction = {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+};
+
+export const CONVICTIONS_INTRO = {
+  label: "Nuestras convicciones",
+  statement: "El software que importa se construye a la vista de todos",
+  body: "Los sistemas que sostienen a una empresa no pueden ser una caja negra. Trabajamos con el código abierto a tu equipo, con las decisiones documentadas y con la arquitectura explicada en palabras que tu organización entiende. Así se construye algo que sobrevive a quienes lo escribimos.",
+  cta: { label: "Conócenos", href: "#contacto" },
+} as const;
+
+export const CONVICTIONS: Conviction[] = [
+  {
+    title: "La IA se mide en producción",
+    description:
+      "Un modelo impresionante en una demo no es un resultado. Medimos lo que cambia en el negocio: tiempos, costos y errores evitados.",
+    icon: GaugeCircle,
+  },
+  {
+    title: "La claridad es una decisión técnica",
+    description:
+      "Elegimos lo simple cuando alcanza y lo complejo cuando se justifica. Cada decisión queda escrita, con sus razones y sus alternativas descartadas.",
+    icon: Telescope,
+  },
+  {
+    title: "El equipo se queda con el control",
+    description:
+      "Entregamos sistemas que tu gente puede operar, auditar y evolucionar sin depender de nosotros. La autonomía es parte del alcance.",
+    icon: Users,
+  },
+];
+
+export const CONTACT = {
+  title: "Construyamos lo que viene",
+  body: "Equipos que llevan la inteligencia artificial del experimento a la operación diaria. Trabajar con Imai significa construir desde los cimientos junto a ingenieros que ya lo hicieron antes.",
+  cta: { label: "Hablemos", href: "mailto:hola@imai.cl" },
+} as const;
+
+export const FOOTER_COLUMNS: { title: string; links: NavLink[] }[] = [
+  {
+    title: "Empresa",
+    links: [
+      { label: "Convicciones", href: "#convicciones" },
+      { label: "Trabajos", href: "#trabajos" },
+      { label: "Contacto", href: "#contacto" },
+    ],
+  },
+  {
+    title: "Soluciones",
+    links: SERVICES.map((s) => ({ label: s.title, href: s.href })),
+  },
+  {
+    title: "Conecta",
+    links: SOCIAL_LINKS,
+  },
+];
+
+/* ------------------------------------------------------------------ */
+/* Navegación con desplegables                                         */
+/* ------------------------------------------------------------------ */
+
+export type MenuLink = {
+  label: string;
+  description: string;
+  href: string;
+  icon: LucideIcon;
+};
+
+export type NavEntry = {
+  label: string;
+  href?: string;
+  menu?: {
+    eyebrow: string;
+    links: MenuLink[];
+    feature: {
+      title: string;
+      description: string;
+      cta: { label: string; href: string };
+    };
+  };
+};
+
+const ICONOS_PROYECTO: Record<string, LucideIcon> = {
+  meridian: Layers,
+  aurora: ScanEye,
+  lumen: LineChart,
+};
+
+export const NAV: NavEntry[] = [
+  {
+    label: "Soluciones",
+    menu: {
+      eyebrow: "Soluciones",
+      links: SERVICES.map((service) => ({
+        label: service.title,
+        description: service.description,
+        href: service.href,
+        icon: service.icon,
+      })),
+      feature: {
+        title: "Cuéntanos tu proyecto",
+        description:
+          "Una conversación de treinta minutos basta para saber si podemos ayudarte y por dónde empezaríamos.",
+        cta: { label: "Hablemos", href: "#contacto" },
+      },
+    },
+  },
+  {
+    label: "Trabajos",
+    menu: {
+      eyebrow: "Trabajos",
+      links: PROJECTS.map((project) => ({
+        label: project.name,
+        description: project.description,
+        href: project.href,
+        icon: ICONOS_PROYECTO[project.id] ?? Layers,
+      })),
+      feature: {
+        title: "Cómo trabajamos",
+        description:
+          "Equipos pequeños, decisiones documentadas y entregas que tu gente puede operar sin nosotros.",
+        cta: { label: "Nuestras convicciones", href: "#convicciones" },
+      },
+    },
+  },
+  { label: "Tecnología", href: "#tecnologia" },
+  { label: "Convicciones", href: "#convicciones" },
+];

@@ -1,130 +1,56 @@
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import { NAV_LINKS, SERVICES, SOCIAL_LINKS, SITE } from "@/data/site";
-import { StarMark } from "@/components/ui/StarIcon";
+import { FOOTER_COLUMNS, SITE } from "@/data/site";
 
 export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer
-      id="contacto"
-      className="relative scroll-mt-20 border-t border-border bg-background-secondary"
-    >
-      <div className="container-editorial py-16 sm:py-24">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
-          {/* Brand */}
-          <div className="md:col-span-5">
-            <Link
-              href="/"
-              className="flex items-center gap-2.5"
-              aria-label="Imai"
-            >
-              <span className="text-primary-bright">
-                <StarMark className="h-4 w-4" />
-              </span>
-              <span className="font-serif text-2xl tracking-[-0.02em]">
-                imai
-              </span>
-            </Link>
-            <p className="mt-6 max-w-[34ch] font-serif text-2xl leading-snug text-foreground-soft sm:text-[1.75rem]">
-              Inspirados por las estrellas,
-              <br />
-              construimos el futuro.
-            </p>
+    <footer data-tone="light" className="relative overflow-hidden">
+      <div className="site">
+        <div className="grid gap-12 border-t border-ink/10 py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-20 md:py-20">
+          <div>
+            <h2 className="display-md max-w-[14ch] text-ink">
+              Hablemos de lo que quieres construir
+            </h2>
             <a
-              href={`mailto:${SITE.email}`}
-              className="mt-8 inline-flex items-center gap-2 font-mono text-sm text-foreground transition-colors hover:text-primary-bright"
+              href={"mailto:" + SITE.email}
+              className="mt-7 inline-block border-b border-ink/25 pb-1 font-sans text-[17px] text-ink transition-colors hover:border-ink"
             >
               {SITE.email}
-              <ArrowUpRight className="h-4 w-4" strokeWidth={1.5} />
             </a>
+            <p className="mt-6 text-[13px] text-ink/50">{SITE.location}</p>
           </div>
 
-          {/* Nav columns */}
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
-            <FooterCol title="Navegación">
-              {NAV_LINKS.map((l) => (
-                <FooterLink key={l.href} href={l.href}>
-                  {l.label}
-                </FooterLink>
-              ))}
-            </FooterCol>
-            <FooterCol title="Servicios">
-              {SERVICES.map((s) => (
-                <FooterLink key={s.id} href={s.href}>
-                  {s.title}
-                </FooterLink>
-              ))}
-            </FooterCol>
-            <FooterCol title="Conectar">
-              {SOCIAL_LINKS.map((s) => (
-                <FooterLink key={s.label} href={s.href} external>
-                  {s.label}
-                </FooterLink>
-              ))}
-              <FooterLink href={`mailto:${SITE.email}`}>Correo</FooterLink>
-            </FooterCol>
+          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
+            {FOOTER_COLUMNS.map((column) => (
+              <nav key={column.title} aria-label={column.title}>
+                <p className="text-[13px] font-medium text-ink/45">
+                  {column.title}
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {column.links.map((link) => (
+                    <li key={column.title + link.href}>
+                      <a
+                        href={link.href}
+                        className="text-[14px] text-ink/75 transition-colors hover:text-ink"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
           </div>
         </div>
 
-        <div className="mt-16 h-px w-full bg-border" />
-
-        <div className="mt-6 flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted">
-            © {year} Imai · {SITE.location}
+        <div className="flex flex-col gap-3 border-t border-ink/10 py-6 text-[12px] text-ink/45 sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            {"\u00A9 " + year + " " + SITE.name + ". Todos los derechos reservados."}
           </p>
-          <p className="font-mono text-[0.65rem] uppercase tracking-[0.2em] text-muted">
-            {SITE.coordinates}
-          </p>
+          <p>{SITE.tagline}</p>
         </div>
       </div>
+
     </footer>
-  );
-}
-
-function FooterCol({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p className="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-muted">
-        {title}
-      </p>
-      <ul className="mt-5 space-y-3">{children}</ul>
-    </div>
-  );
-}
-
-function FooterLink({
-  href,
-  children,
-  external,
-}: {
-  href: string;
-  children: React.ReactNode;
-  external?: boolean;
-}) {
-  return (
-    <li>
-      <Link
-        href={href}
-        target={external ? "_blank" : undefined}
-        rel={external ? "noreferrer noopener" : undefined}
-        className="group inline-flex items-center gap-1.5 text-sm text-foreground-soft transition-colors hover:text-primary-bright"
-      >
-        {children}
-        {external && (
-          <ArrowUpRight
-            className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100"
-            strokeWidth={1.5}
-          />
-        )}
-      </Link>
-    </li>
   );
 }

@@ -1,85 +1,128 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ------------------------------------------------------------------
+   Sistema de diseno Imai
+   Editorial claro: hueso + oliva profundo + lima, serif de display.
+   En Tailwind v4 el tema vive en CSS: cada token de @theme genera su
+   utilidad y queda disponible como var(--color-*) para el CSS plano.
+------------------------------------------------------------------- */
+
+@theme {
+  /* Paleta */
+  --color-bone: #f8f6f0;
+  --color-bone-soft: #f1ede1;
+  --color-bone-deep: #e8e3d3;
+  --color-ink: #1a1b1a;
+  --color-olive: #1e3207;
+  --color-olive-light: #2b4610;
+  --color-lime: #dcef54;
+  --color-lime-deep: #cee04b;
+
+  /* Tipografia */
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+
+  /* Medidas */
+  --container-site: 108rem;
+
+  /* Curvas */
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Animaciones */
+  --animate-marquee: marquee 52s linear infinite;
+  --animate-rise: rise 0.9s var(--ease-soft) both;
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
 
 @layer base {
+  /* Tokens semanticos: cambian segun el tono de cada seccion. */
   :root {
-    --background: #02050d;
-    --background-secondary: #050914;
-    --surface: #080d19;
-    --surface-elevated: #0b1120;
+    --fg: #1a1b1a;
+    --fg-muted: rgba(26, 27, 26, 0.62);
+    --fg-faint: rgba(26, 27, 26, 0.38);
+    --hair: rgba(26, 27, 26, 0.12);
+    --surface: #f1ede1;
+    --surface-strong: #e8e3d3;
 
-    --foreground: #f2f1ec;
-    --foreground-soft: #d2d5df;
-    --muted: #8d95a8;
-
-    --primary: #345dff;
-    --primary-bright: #5f7dff;
-    --primary-soft: #182a73;
-
-    --border: rgba(180, 195, 255, 0.16);
-    --border-strong: rgba(180, 195, 255, 0.32);
-
-    --success: #5bd6a2;
-    --error: #ff5d6c;
-
-    --header-h: 76px;
-    --max-w: 1600px;
+    --header-h: 72px;
+    --footer-reveal-h: clamp(230px, 24vw, 400px);
+    --gutter: clamp(1.25rem, 4vw, 2.5rem);
   }
 
-  * {
-    border-color: var(--border);
+  [data-tone="dark"] {
+    --fg: #f3f2ea;
+    --fg-muted: rgba(243, 242, 234, 0.66);
+    --fg-faint: rgba(243, 242, 234, 0.42);
+    --hair: rgba(243, 242, 234, 0.16);
+    --surface: rgba(243, 242, 234, 0.07);
+    --surface-strong: rgba(243, 242, 234, 0.12);
+  }
+
+  /* En v4 el borde por defecto es currentColor, no gris. */
+  *,
+  ::before,
+  ::after {
+    border-color: var(--hair);
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    background-color: var(--color-bone);
+    @apply font-sans;
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans), system-ui, sans-serif;
+    color: var(--fg);
+    background-color: transparent;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
 
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+  }
+
   ::selection {
-    background-color: rgba(52, 93, 255, 0.32);
-    color: var(--foreground);
+    background-color: var(--color-lime);
+    color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--primary-bright);
+    outline: 2px solid var(--color-olive);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
-    font-family: var(--font-serif), Georgia, serif;
-    font-weight: 400;
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--background);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(141, 149, 168, 0.25);
-    border-radius: 0;
-    border: 2px solid var(--background);
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(52, 93, 255, 0.5);
+  [data-tone="dark"] :focus-visible {
+    outline-color: var(--color-lime);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -95,83 +138,271 @@
 }
 
 @layer components {
-  .container-editorial {
+  .site {
     width: 100%;
-    max-width: var(--max-w);
+    max-width: var(--container-site);
     margin-inline: auto;
-    padding-inline: clamp(1.25rem, 4vw, 4rem);
+    padding-inline: var(--gutter);
   }
 
-  .label-mono {
-    font-family: var(--font-mono), ui-monospace, monospace;
-    font-size: 0.6875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-    color: var(--muted);
+  /* Etiqueta de seccion */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 6px;
+    background-color: var(--surface);
+    padding: 10px 12px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--fg);
+  }
+
+  /* Botones pildora */
+  .pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 2.5rem;
+    border-radius: 9999px;
+    padding: 0.9rem 0.6rem 0.9rem 1.5rem;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+      background-color 0.35s var(--ease-soft),
+      color 0.35s var(--ease-soft),
+      border-color 0.35s var(--ease-soft);
+  }
+
+  .pill__icon {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    background-color: currentColor;
+    flex: none;
+  }
+
+  .pill__icon svg {
+    width: 0.8rem;
+    height: 0.8rem;
+    transition: transform 0.35s var(--ease-soft);
+  }
+
+  .pill:hover .pill__icon svg {
+    transform: translate3d(2px, -2px, 0);
+  }
+
+  .pill--solid {
+    background-color: var(--color-olive);
+    color: #ffffff;
+  }
+  .pill--solid .pill__icon svg {
+    color: var(--color-olive);
+  }
+  .pill--solid:hover {
+    background-color: var(--color-olive-light);
+  }
+
+  .pill--lime {
+    background-color: var(--color-lime);
+    color: var(--color-ink);
+  }
+  .pill--lime .pill__icon svg {
+    color: var(--color-lime);
+  }
+  .pill--lime:hover {
+    background-color: var(--color-lime-deep);
+  }
+
+  .pill--ghost {
+    border: 1px solid var(--hair);
+    color: var(--fg);
+  }
+  .pill--ghost .pill__icon {
+    background-color: var(--surface-strong);
+  }
+  .pill--ghost .pill__icon svg {
+    color: var(--fg);
+  }
+  .pill--ghost:hover {
+    border-color: var(--fg);
+  }
+
+  /* Tarjeta base */
+  .card {
+    border-radius: 1rem;
+    border: 1px solid var(--hair);
+    background-color: var(--surface);
   }
 
   .hairline {
     height: 1px;
     width: 100%;
-    background: var(--border);
-  }
-
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .text-pretty {
-    text-wrap: pretty;
-  }
-
-  /* Grain overlay applied via component */
-  .grain-layer {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 60;
-    opacity: 0.045;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 160px 160px;
-  }
-
-  .accent-blue {
-    color: var(--primary-bright);
-  }
-
-  .line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .focus-ring {
-    position: relative;
+    background-color: var(--hair);
   }
 }
 
 @layer utilities {
-  .mask-fade-r {
+  .text-fg {
+    color: var(--fg);
+  }
+  .text-muted {
+    color: var(--fg-muted);
+  }
+  .text-faint {
+    color: var(--fg-faint);
+  }
+  .border-hair {
+    border-color: var(--hair);
+  }
+  .bg-surface {
+    background-color: var(--surface);
+  }
+  .bg-surface-strong {
+    background-color: var(--surface-strong);
+  }
+
+  /* Display serif */
+  .display-xl {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    font-size: clamp(2.75rem, 6.2vw, 5.5rem);
+  }
+  .display-lg {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.06;
+    font-size: clamp(2.25rem, 4.6vw, 4rem);
+  }
+  .display-md {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .mask-fade-x {
     -webkit-mask-image: linear-gradient(
       to right,
       transparent,
-      #000 12%,
-      #000 88%,
+      #000 8%,
+      #000 92%,
       transparent
     );
     mask-image: linear-gradient(
       to right,
       transparent,
-      #000 12%,
-      #000 88%,
+      #000 8%,
+      #000 92%,
       transparent
     );
   }
+}
 
-  .mask-fade-b {
-    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
-    mask-image: linear-gradient(to bottom, #000 70%, transparent);
-  }
+/* ------------------------------------------------------------------
+   Fondo de pagina: transiciona hueso <-> oliva segun la seccion que
+   ocupa el centro del viewport (ver components/layout/ToneBackground).
+------------------------------------------------------------------- */
+.page-bg {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  /* Se detiene antes del final: por ese hueco asoma la banda fija del
+     footer, que vive detras (-z-30). Mismo truco que el original. */
+  bottom: var(--footer-reveal-h);
+  z-index: -10;
+  pointer-events: none;
+  background-color: var(--color-bone);
+  transition: background-color 0.8s var(--ease-soft);
+}
+
+html[data-page-tone="dark"] .page-bg {
+  background-color: var(--color-olive);
+}
+
+/* Banda fija del footer: queda quieta al fondo del viewport y el
+   contenido la va descubriendo al llegar al final. */
+.footer-reveal {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: -30;
+  height: var(--footer-reveal-h);
+  pointer-events: none;
+  overflow: hidden;
+  background-color: var(--color-olive);
+}
+
+/* Barra superior: el pill sigue el tono de la seccion. */
+.header-pill {
+  background-color: rgba(248, 246, 240, 0.92);
+  border: 1px solid rgba(26, 27, 26, 0.1);
+  color: var(--color-ink);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition:
+    background-color 0.8s var(--ease-soft),
+    border-color 0.8s var(--ease-soft),
+    color 0.8s var(--ease-soft);
+}
+
+html[data-page-tone="dark"] .header-pill {
+  background-color: rgba(52, 70, 30, 0.9);
+  border-color: transparent;
+  color: #f3f2ea;
+}
+
+.header-pill a,
+.header-pill button {
+  color: inherit;
+}
+
+/* Especificidad por encima de `.header-pill a` (que hereda el color
+   del pill), si no el texto del CTA queda oliva sobre oliva. */
+.header-pill a.header-cta,
+.header-pill button.header-cta {
+  background-color: var(--color-olive);
+  color: #ffffff;
+  transition:
+    background-color 0.8s var(--ease-soft),
+    color 0.8s var(--ease-soft);
+}
+
+html[data-page-tone="dark"] .header-pill a.header-cta,
+html[data-page-tone="dark"] .header-pill button.header-cta {
+  background-color: var(--color-lime);
+  color: var(--color-ink);
+}
+
+/* El texto y las superficies cruzan junto con el fondo, para que el
+   cambio de tono no pase por un momento de bajo contraste. */
+.text-fg,
+.text-muted,
+.text-faint,
+.card,
+.chip,
+.pill--ghost,
+.hairline {
+  transition:
+    color 0.8s var(--ease-soft),
+    background-color 0.8s var(--ease-soft),
+    border-color 0.8s var(--ease-soft);
 }

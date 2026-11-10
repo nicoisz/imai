@@ -1,0 +1,42 @@
+import { SERVICES, SOLUTIONS_INTRO } from "@/data/site";
+import { Reveal } from "@/components/ui/Reveal";
+
+export function Solutions() {
+  return (
+    <section
+      id="soluciones"
+      data-tone="dark"
+      className="relative scroll-mt-24 pb-24 pt-20 md:pb-[120px] md:pt-[120px]"
+    >
+      <div className="site">
+        <Reveal>
+          <span className="chip">{SOLUTIONS_INTRO.label}</span>
+          <h2 className="display-lg mt-6 max-w-[22ch] text-fg">
+            {SOLUTIONS_INTRO.heading}
+          </h2>
+        </Reveal>
+
+        <div className="mt-14 grid gap-3 md:mt-20 md:grid-cols-2">
+          {SERVICES.map((service, i) => {
+            const Icon = service.icon;
+            return (
+              <Reveal key={service.id} delay={i * 0.06}>
+                <article className="card h-full p-6 md:p-8">
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-lime text-olive">
+                    <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-7 font-sans text-[19px] font-medium tracking-[-0.02em] text-fg">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 max-w-[46ch] text-[14px] leading-relaxed text-muted">
+                    {service.description}
+                  </p>
+                </article>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
