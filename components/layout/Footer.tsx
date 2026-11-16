@@ -17,13 +17,13 @@ export function Footer() {
             >
               {SITE.email}
             </a>
-            <p className="mt-6 text-[13px] text-ink/50">{SITE.location}</p>
+            <p className="mt-6 text-[13px] text-ink/65">{SITE.location}</p>
           </div>
 
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             {FOOTER_COLUMNS.map((column) => (
               <nav key={column.title} aria-label={column.title}>
-                <p className="text-[13px] font-medium text-ink/45">
+                <p className="text-[13px] font-medium text-ink/65">
                   {column.title}
                 </p>
                 <ul className="mt-4 space-y-3">
@@ -43,7 +43,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 border-t border-ink/10 py-6 text-[12px] text-ink/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-ink/10 py-6 text-[12px] text-ink/65 sm:flex-row sm:items-center sm:justify-between">
           <p>
             {"\u00A9 " + year + " " + SITE.name + ". Todos los derechos reservados."}
           </p>

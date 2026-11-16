@@ -11,8 +11,8 @@ export function Mission() {
     >
       <div className="site">
         <Reveal className="mx-auto max-w-[52rem] text-center">
-          <h2 className="display-lg text-ink/45">{MISSION.statement}</h2>
-          <p className="mx-auto mt-8 max-w-[32rem] text-[15px] leading-relaxed text-ink/55">
+          <h2 className="display-lg text-ink/70">{MISSION.statement}</h2>
+          <p className="mx-auto mt-8 max-w-[32rem] text-[15px] leading-relaxed text-ink/65">
             {MISSION.subtitle}
           </p>
           <div className="mt-10 flex justify-center">
