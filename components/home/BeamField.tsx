@@ -50,6 +50,17 @@ const T_MIN = 0.16;
 const PUSH_RADIUS = 0.17;
 const PUSH_MAX = 0.03;
 
+/**
+ * Fraccion del lienzo que ocupa el haz en reposo. El resto es el
+ * margen por el que se mueve con el parallax: sin el, los contornos
+ * exteriores se salen del lienzo y se ven cortados por los lados.
+ */
+const FIT = 0.84;
+
+/** Recorrido del parallax, en fraccion de la caja del haz. */
+const PARALLAX_X = 0.18;
+const PARALLAX_Y = 0.22;
+
 type Dot = {
   /** Profundidad del contorno, 0 dentro, 1 fuera. */
   t: number;
@@ -189,10 +200,10 @@ export function BeamField({ className, rotate = false }: BeamFieldProps) {
     const render = () => {
       if (width === 0 || height === 0) return;
 
-      // La escena se encaja por "contain": asi el haz entra entero en
-      // cajas de cualquier proporcion. En el hero la caja ya tiene la
-      // proporcion de la escena, asi que no sobra margen.
-      const boxH = Math.min(height, width / AR);
+      // La escena se encaja por "contain" y ademas se reduce a FIT,
+      // para que el parallax tenga por donde moverse sin que los
+      // contornos exteriores salgan del lienzo.
+      const boxH = Math.min(height, width / AR) * FIT;
       const boxW = boxH * AR;
       const ox = (width - boxW) / 2;
       const oy = (height - boxH) / 2;
@@ -225,8 +236,8 @@ export function BeamField({ className, rotate = false }: BeamFieldProps) {
 
           // Parallax por profundidad: los contornos de fuera siguen al
           // cursor mas que los de dentro.
-          nx += (driftX - 0.5) * 0.32 * t;
-          ny += (driftY - 0.5) * 0.55 * t;
+          nx += (driftX - 0.5) * PARALLAX_X * t;
+          ny += (driftY - 0.5) * PARALLAX_Y * t;
 
           // Empuje local alrededor del cursor. La distancia se mide en
           // unidades de alto, por eso x se corrige por AR.
@@ -259,8 +270,8 @@ export function BeamField({ className, rotate = false }: BeamFieldProps) {
       for (const t of [0.56, 1]) {
         const rx = MAX_RX * t;
         const ry = MAX_RY * t;
-        const cx = ox + (APEX_X - rx + (driftX - 0.5) * 0.32 * t) * boxW;
-        const cy = oy + (APEX_Y + (driftY - 0.5) * 0.55 * t) * boxH;
+        const cx = ox + (APEX_X - rx + (driftX - 0.5) * PARALLAX_X * t) * boxW;
+        const cy = oy + (APEX_Y + (driftY - 0.5) * PARALLAX_Y * t) * boxH;
         ctx.beginPath();
         ctx.ellipse(cx, cy, rx * boxW, ry * boxH, 0, 0, TAU);
         ctx.stroke();

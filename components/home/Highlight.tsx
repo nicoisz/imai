@@ -31,7 +31,7 @@ export function Highlight() {
           </div>
 
           <div
-            className="text-lime/70 pointer-events-none relative hidden h-[300px] w-full md:block"
+            className="text-lime/70 pointer-events-none relative hidden aspect-[1562/1007] w-full md:block"
             aria-hidden="true"
           >
             <BeamField />

@@ -39,7 +39,7 @@ export function HeroArt() {
   return (
     <div
       ref={ref}
-      className="text-olive pointer-events-none absolute top-[-10px] left-1/2 aspect-[1153/1638] w-[max(820px,82%)] -translate-x-1/2 will-change-[opacity]"
+      className="text-olive pointer-events-none absolute top-[-10px] left-1/2 aspect-[1153/1638] w-[max(980px,98%)] -translate-x-1/2 will-change-[opacity]"
       style={{ opacity: BASE_OPACITY }}
       aria-hidden="true"
     >

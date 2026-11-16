@@ -17,7 +17,7 @@ export function ContactCTA() {
             className="bg-olive relative overflow-hidden rounded-2xl px-6 py-14 md:px-16 md:py-24"
           >
             <div
-              className="text-lime/50 pointer-events-none absolute top-1/2 -right-[10%] hidden aspect-[1638/1153] w-[56%] -translate-y-1/2 md:block"
+              className="text-lime/50 pointer-events-none absolute top-1/2 -right-[8%] hidden aspect-[1638/1153] w-[66%] -translate-y-1/2 md:block"
               aria-hidden="true"
             >
               <BeamField />
