@@ -106,7 +106,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    /* `clip` y no `hidden`: hidden convierte al body en contenedor de
+       scroll y eso rompe cualquier position:sticky de dentro. */
+    overflow-x: clip;
   }
 
   h1,
