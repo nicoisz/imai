@@ -10,10 +10,24 @@ type PillProps = {
   className?: string;
 };
 
-function ArrowGlyph() {
+/**
+ * La etiqueta reserva 76px a la derecha; dentro de ese hueco vive un
+ * punto de 6px. Al pasar el cursor la etiqueta encoge su padding, el
+ * hueco sale de ella (margin-left de -3.25rem a 0) y el punto crece
+ * hasta ser un circulo de 52px con la flecha dentro. Todo el gesto
+ * esta en `.pill` (app/globals.css); aqui solo va la estructura.
+ */
+function Slot() {
   return (
-    <span className="pill__icon" aria-hidden="true">
-      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth={1.5}>
+    <span className="pill__slot" aria-hidden="true">
+      <span className="pill__dot" />
+      <svg
+        className="pill__arrow"
+        viewBox="0 0 12 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={1.5}
+      >
         <path
           d="M3.2 8.8 8.8 3.2M4.4 3.2h4.4v4.4"
           strokeLinecap="round"
@@ -33,8 +47,8 @@ export function Pill({
   const classes = cn("pill", "pill--" + variant, className);
   const inner = (
     <>
-      <span>{children}</span>
-      <ArrowGlyph />
+      <span className="pill__label">{children}</span>
+      <Slot />
     </>
   );
 

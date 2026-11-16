@@ -10,7 +10,11 @@ const UMBRAL = 8;
 const ZONA_SUPERIOR = 90;
 
 const idPanel = (label: string) =>
-  "menu-" + label.toLowerCase().normalize("NFD").replace(/[^a-z]/g, "");
+  "menu-" +
+  label
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[^a-z]/g, "");
 
 function Chevron({ abierto }: { abierto: boolean }) {
   return (
@@ -59,7 +63,7 @@ function Wordmark() {
       <span className="font-serif text-[19px] leading-none tracking-[-0.04em]">
         {SITE.name}
       </span>
-      <span className="mt-[2px] h-[5px] w-[5px] rounded-full bg-lime-deep" />
+      <span className="bg-lime-deep mt-[2px] h-[5px] w-[5px] rounded-full" />
     </a>
   );
 }
@@ -168,9 +172,11 @@ export function Header() {
                     aria-expanded={abierto === entry.label}
                     aria-controls={idPanel(entry.label)}
                     onClick={() =>
-                      setAbierto((v) => (v === entry.label ? null : entry.label))
+                      setAbierto((v) =>
+                        v === entry.label ? null : entry.label,
+                      )
                     }
-                    className="inline-flex items-center gap-1 text-[15px] opacity-75 transition-opacity hover:opacity-100 aria-expanded:opacity-100"
+                    className="nav-link gap-1 text-[15px] opacity-75 transition-opacity hover:opacity-100 aria-expanded:opacity-100"
                   >
                     {entry.label}
                     <Chevron abierto={abierto === entry.label} />
@@ -180,7 +186,7 @@ export function Header() {
                     key={entry.label}
                     href={entry.href}
                     onClick={cerrarTodo}
-                    className="text-[15px] opacity-75 transition-opacity hover:opacity-100"
+                    className="nav-link text-[15px] opacity-75 transition-opacity hover:opacity-100"
                   >
                     {entry.label}
                   </a>
@@ -234,15 +240,18 @@ export function Header() {
                 key={entry.label}
                 id={idPanel(entry.label)}
                 className={cn(
-                  "hidden transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none md:grid",
+                  "hidden transition-[grid-template-rows] duration-[350ms] ease-[cubic-bezier(0.83,0,0.17,1)] motion-reduce:transition-none md:grid",
                   activo ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                 )}
               >
                 <div
-                  className={cn("min-h-0 overflow-hidden", !activo && "invisible")}
+                  className={cn(
+                    "min-h-0 overflow-hidden",
+                    !activo && "invisible",
+                  )}
                   aria-hidden={!activo}
                 >
-                  <div className="border-t border-current/10 px-5 pb-7 pt-5 md:px-6">
+                  <div className="border-t border-current/10 px-5 pt-5 pb-7 md:px-6">
                     <p className="eyebrow opacity-45">{menu.eyebrow}</p>
 
                     <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-10">
@@ -256,7 +265,7 @@ export function Header() {
                               onClick={cerrarTodo}
                               className="group flex items-start gap-3 border-b border-current/10 py-3.5"
                             >
-                              <span className="mt-[2px] grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-current/15 transition-colors group-hover:border-current/40">
+                              <span className="group-hover:bg-lime-deep group-hover:text-olive mt-[2px] grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-current/15 transition-colors duration-[120ms] ease-[cubic-bezier(0,0,0.2,1)] group-hover:border-transparent">
                                 <Icon
                                   size={15}
                                   strokeWidth={1.6}
@@ -267,7 +276,7 @@ export function Header() {
                                 <span className="block text-[14px] font-medium">
                                   {link.label}
                                 </span>
-                                <span className="mt-1 block line-clamp-2 text-[12.5px] leading-snug opacity-55">
+                                <span className="mt-1 line-clamp-2 block text-[12.5px] leading-snug opacity-55">
                                   {link.description}
                                 </span>
                               </span>
@@ -305,7 +314,7 @@ export function Header() {
           <div
             id="menu-movil"
             className={cn(
-              "grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none md:hidden",
+              "grid transition-[grid-template-rows] duration-[350ms] ease-[cubic-bezier(0.83,0,0.17,1)] motion-reduce:transition-none md:hidden",
               movil ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
             )}
           >
@@ -355,7 +364,7 @@ export function Header() {
                       <div
                         id={idPanel(entry.label) + "-movil"}
                         className={cn(
-                          "grid transition-[grid-template-rows] duration-300 ease-out",
+                          "grid transition-[grid-template-rows] duration-[350ms] ease-[cubic-bezier(0.83,0,0.17,1)]",
                           activo ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                         )}
                       >

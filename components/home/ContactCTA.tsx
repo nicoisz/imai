@@ -1,7 +1,7 @@
 import { CONTACT } from "@/data/site";
 import { Pill } from "@/components/ui/Pill";
 import { Reveal } from "@/components/ui/Reveal";
-import { DotField } from "./DotField";
+import { BeamField } from "./BeamField";
 
 export function ContactCTA() {
   return (
@@ -14,18 +14,20 @@ export function ContactCTA() {
         <Reveal>
           <div
             data-tone="dark"
-            className="relative overflow-hidden rounded-2xl bg-olive px-6 py-14 md:px-16 md:py-24"
+            className="bg-olive relative overflow-hidden rounded-2xl px-6 py-14 md:px-16 md:py-24"
           >
             <div
-              className="pointer-events-none absolute -right-[12%] top-1/2 hidden aspect-square w-[52%] -translate-y-1/2 text-lime/50 md:block"
+              className="text-lime/50 pointer-events-none absolute top-1/2 -right-[10%] hidden aspect-[1638/1153] w-[56%] -translate-y-1/2 md:block"
               aria-hidden="true"
             >
-              <DotField />
+              <BeamField />
             </div>
 
             <div className="relative">
-              <h2 className="display-lg max-w-[14ch] text-bone">{CONTACT.title}</h2>
-              <p className="mt-7 max-w-[42ch] text-[14px] leading-relaxed text-bone/65">
+              <h2 className="display-lg text-bone max-w-[14ch]">
+                {CONTACT.title}
+              </h2>
+              <p className="text-bone/65 mt-7 max-w-[42ch] text-[14px] leading-relaxed">
                 {CONTACT.body}
               </p>
               <div className="mt-10">

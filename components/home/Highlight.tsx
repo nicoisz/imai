@@ -1,7 +1,7 @@
 import { HIGHLIGHT } from "@/data/site";
 import { Pill } from "@/components/ui/Pill";
 import { Reveal } from "@/components/ui/Reveal";
-import { DotField } from "./DotField";
+import { BeamField } from "./BeamField";
 
 export function Highlight() {
   return (
@@ -14,10 +14,10 @@ export function Highlight() {
         <Reveal className="relative grid items-center gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           <div>
             <span className="chip">{HIGHLIGHT.label}</span>
-            <h2 className="display-lg mt-6 max-w-[12ch] text-fg">
+            <h2 className="display-lg text-fg mt-6 max-w-[12ch]">
               {HIGHLIGHT.title}
             </h2>
-            <p className="mt-6 max-w-[38ch] text-[14px] leading-relaxed text-muted">
+            <p className="text-muted mt-6 max-w-[38ch] text-[14px] leading-relaxed">
               {HIGHLIGHT.description}
             </p>
             <div className="mt-9 flex flex-wrap gap-3">
@@ -31,10 +31,10 @@ export function Highlight() {
           </div>
 
           <div
-            className="pointer-events-none relative hidden h-[300px] w-full text-lime/70 md:block"
+            className="text-lime/70 pointer-events-none relative hidden h-[300px] w-full md:block"
             aria-hidden="true"
           >
-            <DotField />
+            <BeamField />
           </div>
         </Reveal>
       </div>

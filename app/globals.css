@@ -3,21 +3,27 @@
 
 /* ------------------------------------------------------------------
    Sistema de diseno Imai
-   Editorial claro: hueso + oliva profundo + lima, serif de display.
-   En Tailwind v4 el tema vive en CSS: cada token de @theme genera su
-   utilidad y queda disponible como var(--color-*) para el CSS plano.
+   Paleta y curvas alineadas 1:1 con los tokens que publica
+   reflection.ai (leidos de su :root en produccion).
 ------------------------------------------------------------------- */
 
 @theme {
-  /* Paleta */
-  --color-bone: #f8f6f0;
-  --color-bone-soft: #f1ede1;
+  /* Paleta — el comentario indica el token equivalente del original */
+  --color-bone: #f8f6f0; /* --color-bg */
+  --color-bone-soft: #f1ede1; /* --color-surface-warm */
   --color-bone-deep: #e8e3d3;
-  --color-ink: #1a1b1a;
-  --color-olive: #1e3207;
+  --color-ink: #1a1b1a; /* --color-fg */
+  --color-ink-muted: #525252; /* --color-muted */
+  --color-olive: #1e3207; /* --color-accent-dark */
   --color-olive-light: #2b4610;
-  --color-lime: #dcef54;
-  --color-lime-deep: #cee04b;
+  --color-lime: #dcef54; /* --color-accent */
+  --color-lime-deep: #cee04b; /* --color-accent-lime */
+  --color-lilac: #c9bdf0; /* --color-accent-lilac */
+  --color-sand: #b19d8b; /* --color-sand */
+  --color-brown: #473f38; /* --color-brown */
+  --color-fg-light: #f8f6f0; /* --color-fg-light */
+  --color-fg-light-muted: #a3a3a3; /* --color-fg-light-muted */
+  --color-line: #e5e5e5; /* --color-border */
 
   /* Tipografia */
   --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto,
@@ -27,8 +33,10 @@
   /* Medidas */
   --container-site: 108rem;
 
-  /* Curvas */
+  /* Curvas — las mismas del original */
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-ref: cubic-bezier(0, 0, 0.2, 1); /* --ease-out */
+  --ease-menu: cubic-bezier(0.83, 0, 0.17, 1); /* transiciones de menu */
 
   /* Animaciones */
   --animate-marquee: marquee 52s linear infinite;
@@ -58,9 +66,9 @@
   /* Tokens semanticos: cambian segun el tono de cada seccion. */
   :root {
     --fg: #1a1b1a;
-    --fg-muted: rgba(26, 27, 26, 0.62);
-    --fg-faint: rgba(26, 27, 26, 0.38);
-    --hair: rgba(26, 27, 26, 0.12);
+    --fg-muted: #525252;
+    --fg-faint: rgba(26, 27, 26, 0.45);
+    --hair: rgba(26, 27, 26, 0.1);
     --surface: #f1ede1;
     --surface-strong: #e8e3d3;
 
@@ -70,12 +78,12 @@
   }
 
   [data-tone="dark"] {
-    --fg: #f3f2ea;
-    --fg-muted: rgba(243, 242, 234, 0.66);
-    --fg-faint: rgba(243, 242, 234, 0.42);
-    --hair: rgba(243, 242, 234, 0.16);
-    --surface: rgba(243, 242, 234, 0.07);
-    --surface-strong: rgba(243, 242, 234, 0.12);
+    --fg: #f8f6f0;
+    --fg-muted: rgba(248, 246, 240, 0.7);
+    --fg-faint: rgba(248, 246, 240, 0.45);
+    --hair: rgba(248, 246, 240, 0.1); /* --color-overlay-light */
+    --surface: rgba(248, 246, 240, 0.1);
+    --surface-strong: rgba(248, 246, 240, 0.16);
   }
 
   /* En v4 el borde por defecto es currentColor, no gris. */
@@ -159,79 +167,153 @@
     color: var(--fg);
   }
 
-  /* Botones pildora */
+  /* ----------------------------------------------------------------
+     Boton pildora.
+     Replica el gesto del original: la etiqueta reserva sitio a la
+     derecha para un punto diminuto; al pasar el cursor la etiqueta
+     encoge, el punto sale de ella y crece hasta ser un circulo con la
+     flecha dentro.
+  ---------------------------------------------------------------- */
   .pill {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 2.5rem;
-    border-radius: 9999px;
-    padding: 0.9rem 0.6rem 0.9rem 1.5rem;
     font-size: 14px;
     font-weight: 500;
     letter-spacing: -0.01em;
     line-height: 1;
     white-space: nowrap;
-    transition:
-      background-color 0.35s var(--ease-soft),
-      color 0.35s var(--ease-soft),
-      border-color 0.35s var(--ease-soft);
   }
 
-  .pill__icon {
+  .pill__label {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 9999px;
+    padding: 1rem 76px 1rem 1.5rem;
+    transition:
+      padding 0.3s var(--ease-out-ref),
+      background-color 0.3s var(--ease-out-ref),
+      color 0.3s var(--ease-out-ref),
+      border-color 0.3s var(--ease-out-ref);
+  }
+
+  .pill:hover .pill__label,
+  .pill:focus-visible .pill__label {
+    padding-right: 1.5rem;
+  }
+
+  .pill__slot {
+    position: relative;
     display: grid;
     place-items: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 9999px;
-    background-color: currentColor;
     flex: none;
+    width: 3.25rem;
+    height: 3.25rem;
+    margin-left: -3.25rem;
+    transition: margin 0.3s var(--ease-out-ref);
   }
 
-  .pill__icon svg {
-    width: 0.8rem;
-    height: 0.8rem;
-    transition: transform 0.35s var(--ease-soft);
+  .pill:hover .pill__slot,
+  .pill:focus-visible .pill__slot {
+    margin-left: 0;
   }
 
-  .pill:hover .pill__icon svg {
-    transform: translate3d(2px, -2px, 0);
+  .pill__dot {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 0.375rem;
+    height: 0.375rem;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    transition: all 0.3s var(--ease-out-ref);
   }
 
-  .pill--solid {
+  .pill:hover .pill__dot,
+  .pill:focus-visible .pill__dot {
+    width: 3.25rem;
+    height: 3.25rem;
+  }
+
+  .pill__arrow {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-out-ref);
+  }
+
+  .pill:hover .pill__arrow,
+  .pill:focus-visible .pill__arrow {
+    opacity: 1;
+    transition-delay: 0.1s;
+  }
+
+  /* Variante oliva */
+  .pill--solid .pill__label {
     background-color: var(--color-olive);
     color: #ffffff;
   }
-  .pill--solid .pill__icon svg {
-    color: var(--color-olive);
+  .pill--solid .pill__slot {
+    color: #ffffff;
   }
-  .pill--solid:hover {
-    background-color: var(--color-olive-light);
+  .pill--solid .pill__dot {
+    background-color: #ffffff;
+  }
+  .pill--solid:hover .pill__dot,
+  .pill--solid:focus-visible .pill__dot {
+    background-color: var(--color-olive);
   }
 
-  .pill--lime {
+  /* Variante lima */
+  .pill--lime .pill__label {
     background-color: var(--color-lime);
     color: var(--color-ink);
   }
-  .pill--lime .pill__icon svg {
-    color: var(--color-lime);
+  .pill--lime .pill__slot {
+    color: var(--color-ink);
   }
-  .pill--lime:hover {
-    background-color: var(--color-lime-deep);
+  .pill--lime .pill__dot {
+    background-color: var(--color-ink);
+  }
+  .pill--lime:hover .pill__dot,
+  .pill--lime:focus-visible .pill__dot {
+    background-color: var(--color-lime);
   }
 
-  .pill--ghost {
-    border: 1px solid var(--hair);
+  /* Variante contorno */
+  .pill--ghost .pill__label {
+    border: 1px solid color-mix(in srgb, var(--fg) 25%, transparent);
+    background-color: var(--color-bone);
     color: var(--fg);
   }
-  .pill--ghost .pill__icon {
-    background-color: var(--surface-strong);
+  .pill--ghost .pill__slot {
+    color: var(--color-olive);
   }
-  .pill--ghost .pill__icon svg {
-    color: var(--fg);
+  .pill--ghost .pill__dot {
+    background-color: var(--fg);
   }
-  .pill--ghost:hover {
-    border-color: var(--fg);
+  .pill--ghost:hover .pill__dot,
+  .pill--ghost:focus-visible .pill__dot {
+    background-color: var(--color-bone);
+    border-color: color-mix(in srgb, var(--fg) 25%, transparent);
+  }
+
+  /* Sobre oliva el contorno va al reves: sin relleno y borde claro. */
+  [data-tone="dark"] .pill--ghost .pill__label {
+    border-color: color-mix(in srgb, var(--color-fg-light) 35%, transparent);
+    background-color: transparent;
+    color: var(--color-fg-light);
+  }
+  [data-tone="dark"] .pill--ghost .pill__slot {
+    color: var(--color-fg-light);
+  }
+  [data-tone="dark"] .pill--ghost .pill__dot {
+    background-color: var(--color-fg-light);
+  }
+  [data-tone="dark"] .pill--ghost:hover .pill__dot,
+  [data-tone="dark"] .pill--ghost:focus-visible .pill__dot {
+    background-color: transparent;
+    border-color: color-mix(in srgb, var(--color-fg-light) 35%, transparent);
   }
 
   /* Tarjeta base */
@@ -245,6 +327,61 @@
     height: 1px;
     width: 100%;
     background-color: var(--hair);
+  }
+
+  /* ----------------------------------------------------------------
+     Texto que se enciende palabra a palabra con el scroll.
+     Misma formula que usa el original: cada palabra lleva su indice
+     en --i y el contenedor avanza --lit; la mezcla va del 32% al 100%
+     del color heredado, con una rampa suave de tres palabras.
+  ---------------------------------------------------------------- */
+  .lit {
+    --lit: 0;
+  }
+
+  .lit span {
+    color: color-mix(
+      in srgb,
+      currentColor
+        calc(clamp(0.32, calc(0.32 + (var(--lit) - var(--i)) / 3), 1) * 100%),
+      transparent
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lit span {
+      color: currentColor;
+    }
+  }
+
+  /* Punto que aparece a la izquierda del enlace al pasar el cursor. */
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.15s var(--ease-out-ref);
+  }
+
+  .nav-link::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-right: 0.5rem;
+    width: 0.375rem;
+    height: 0.375rem;
+    transform: translateY(-50%);
+    border-radius: 9999px;
+    background-color: currentColor;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms var(--ease-out-ref);
+  }
+
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before,
+  .nav-link[aria-expanded="true"]::before {
+    opacity: 1;
   }
 }
 
@@ -354,7 +491,7 @@ html[data-page-tone="dark"] .page-bg {
 /* Barra superior: el pill sigue el tono de la seccion. */
 .header-pill {
   background-color: rgba(248, 246, 240, 0.92);
-  border: 1px solid rgba(26, 27, 26, 0.1);
+  border: 1px solid rgba(26, 27, 26, 0.08);
   color: var(--color-ink);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -364,10 +501,11 @@ html[data-page-tone="dark"] .page-bg {
     color 0.8s var(--ease-soft);
 }
 
+/* #34461ee5: el mismo valor que usa la barra del original en oscuro. */
 html[data-page-tone="dark"] .header-pill {
-  background-color: rgba(52, 70, 30, 0.9);
+  background-color: rgba(52, 70, 30, 0.898);
   border-color: transparent;
-  color: #f3f2ea;
+  color: var(--color-fg-light);
 }
 
 .header-pill a,
@@ -399,7 +537,6 @@ html[data-page-tone="dark"] .header-pill button.header-cta {
 .text-faint,
 .card,
 .chip,
-.pill--ghost,
 .hairline {
   transition:
     color 0.8s var(--ease-soft),
