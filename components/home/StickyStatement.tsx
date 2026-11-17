@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { ShootingStars } from "./ShootingStars";
 
 /**
  * Portada con el titular pegado por delante.
@@ -82,6 +83,10 @@ export function StickyStatement({ text, src, alt }: StickyStatementProps) {
           className="object-cover opacity-80 mix-blend-luminosity [filter:grayscale(1)_contrast(1.05)]"
         />
         <div className="from-olive/90 via-olive/25 absolute inset-0 bg-gradient-to-t to-transparent" />
+
+        {/* Estrella fugaz: se dispara al entrar en pantalla y no se
+            repite hasta volver a salir y entrar de nuevo. */}
+        <ShootingStars />
       </div>
 
       {/* El carril empieza a media caja: por eso el titular se clava
