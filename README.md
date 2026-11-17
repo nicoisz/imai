@@ -165,9 +165,10 @@ renderiza con `.map()`. No hay elementos repetidos escritos a mano.
 
 - **Textos, enlaces y proyectos:** edita `data/site.ts`.
 - **Colores y tipografía:** bloque `@theme` en `app/globals.css` (Tailwind v4, configuración CSS-first).
-- **Ilustración del hero:** `components/home/DotField.tsx` genera el campo de
-  puntos con un PRNG sembrado; los lóbulos y las opacidades están al principio
-  del archivo.
+- **Ilustración del hero:** `components/home/SphereField.tsx` genera el campo de
+  esferas sobre canvas: reparto cuasi-aleatorio (secuencia R2), sprites
+  sombreados y reacción al cursor (parallax, empuje y lente). Las densidades,
+  tamanos y recorridos están al principio del archivo.
 - **Imágenes reales:** colócalas en `public/` y úsalas con `next/image` cuando
   dispongas de los recursos en AVIF/WebP.
 
